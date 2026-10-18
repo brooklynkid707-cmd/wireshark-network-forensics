@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Network Forensics Report</title>
+<style>
+  :root { --bg:#f6f7f9; --fg:#1b1f24; --card:#fff; --line:#d9dde3; --muted:#5b6470;
+          --crit:#b3261e; --high:#d9480f; --med:#b8860b; --low:#2b6cb0; --info:#4a5568; }
+  body { margin:0; padding:24px 16px; font:15px/1.5 system-ui, -apple-system, Segoe UI, sans-serif;
+         background:var(--bg); color:var(--fg); }
+  main { max-width:1080px; margin:0 auto; }
+  h1 { margin:0 0 4px; font-size:26px; } h2 { font-size:20px; margin:32px 0 8px; }
+  h3 { font-size:16px; margin:0 0 6px; }
+  .muted { color:var(--muted); }
+  .card { background:var(--card); border:1px solid var(--line); border-radius:8px; padding:16px; margin:12px 0; }
+  .badge { display:inline-block; padding:2px 8px; border-radius:4px; color:#fff; font-size:12px; font-weight:600; }
+  .CRITICAL{background:var(--crit)} .HIGH{background:var(--high)} .MEDIUM{background:var(--med)}
+  .LOW{background:var(--low)} .INFO{background:var(--info)}
+  table { border-collapse:collapse; width:100%; font-size:14px; }
+  th, td { text-align:left; padding:4px 8px; border-bottom:1px solid var(--line); vertical-align:top; }
+  code { background:#eef1f5; padding:1px 4px; border-radius:3px; font-size:13px; word-break:break-all; }
+  .grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:12px; }
+  dl { margin:8px 0 0; } dt { font-weight:600; } dd { margin:0 0 6px 0; }
+</style>
+</head>
+<body>
+<main>
+<h1>Network Forensics Report</h1>
+<p class="muted">Generated 2026-10-18 04:06:33 UTC by netforensics. 8 capture(s), 9 finding(s).</p>
+<h2>Overview</h2>
+<div class="card">
+<table>
+<tr><th>Capture</th><th>Packets</th><th>Duration</th><th>Findings</th><th>Max severity</th></tr>
+<tr><td><a href="#cap0">pcaps/arp_spoof.pcap</a></td><td>276</td><td>109.27s</td><td>2</td><td><span class="badge CRITICAL">CRITICAL</span></td></tr>
+<tr><td><a href="#cap1">pcaps/baseline.pcap</a></td><td>860</td><td>301.31s</td><td>0</td><td><span class="badge INFO">INFO</span></td></tr>
+<tr><td><a href="#cap2">pcaps/c2_beacon.pcap</a></td><td>242</td><td>480.68s</td><td>1</td><td><span class="badge HIGH">HIGH</span></td></tr>
+<tr><td><a href="#cap3">pcaps/dns_tunnel.pcap</a></td><td>248</td><td>85.49s</td><td>1</td><td><span class="badge HIGH">HIGH</span></td></tr>
+<tr><td><a href="#cap4">pcaps/http_credentials.pcap</a></td><td>124</td><td>46.93s</td><td>2</td><td><span class="badge HIGH">HIGH</span></td></tr>
+<tr><td><a href="#cap5">pcaps/icmp_exfil.pcap</a></td><td>128</td><td>41.36s</td><td>1</td><td><span class="badge HIGH">HIGH</span></td></tr>
+<tr><td><a href="#cap6">pcaps/port_scan.pcap</a></td><td>589</td><td>76.06s</td><td>1</td><td><span class="badge HIGH">HIGH</span></td></tr>
+<tr><td><a href="#cap7">pcaps/smb_lateral.pcap</a></td><td>157</td><td>43.42s</td><td>1</td><td><span class="badge CRITICAL">CRITICAL</span></td></tr>
+</table>
+</div>
+
+<h2 id="cap0">pcaps/arp_spoof.pcap</h2>
+<div class="grid">
+  <div class="card"><h3>Capture facts</h3>
+    <table>
+    <tr><td>Packets</td><td>276</td></tr>
+    <tr><td>Bytes</td><td>25174</td></tr>
+    <tr><td>Duration</td><td>109.27 s</td></tr>
+    <tr><td>DNS queries</td><td>7 (4 unique)</td></tr>
+    <tr><td>ARP packets</td><td>76</td></tr>
+    <tr><td>HTTP requests</td><td>52</td></tr>
+    </table></div>
+  <div class="card"><h3>Protocol hierarchy</h3><table><tr><td>ETH/IP/TCP</td><td>128</td></tr><tr><td>ETH/ARP</td><td>76</td></tr><tr><td>ETH/IP/TCP/HTTP</td><td>52</td></tr><tr><td>ETH/IP/UDP/DNS</td><td>14</td></tr><tr><td>ETH/IP/UDP</td><td>6</td></tr></table></div>
+  <div class="card"><h3>Top talkers</h3><table><tr><th>Address</th><th>Packets</th><th>Bytes</th></tr><tr><td>10.10.1.11</td><td>110</td><td>14722</td></tr><tr><td>203.0.113.10</td><td>70</td><td>11430</td></tr><tr><td>10.10.1.14</td><td>48</td><td>3876</td></tr><tr><td>10.10.0.20</td><td>40</td><td>2992</td></tr><tr><td>198.51.100.123</td><td>26</td><td>2220</td></tr><tr><td>10.10.1.12</td><td>22</td><td>1764</td></tr><tr><td>10.10.0.80</td><td>20</td><td>1620</td></tr><tr><td>203.0.113.55</td><td>20</td><td>1680</td></tr><tr><td>10.10.0.53</td><td>14</td><td>1200</td></tr><tr><td>203.0.113.40</td><td>10</td><td>840</td></tr></table></div>
+  <div class="card"><h3>Top conversations</h3><table><tr><th>A</th><th>B</th><th>Pkts</th><th>Bytes</th><th>Proto</th></tr><tr><td>10.10.1.11</td><td>203.0.113.10</td><td>60</td><td>10590</td><td>TCP</td></tr><tr><td>10.10.0.20</td><td>10.10.1.14</td><td>20</td><td>1496</td><td>TCP</td></tr><tr><td>10.10.1.11</td><td>198.51.100.123</td><td>12</td><td>1020</td><td>TCP,UDP</td></tr><tr><td>10.10.1.11</td><td>203.0.113.40</td><td>10</td><td>840</td><td>TCP</td></tr><tr><td>10.10.1.14</td><td>203.0.113.10</td><td>10</td><td>840</td><td>TCP</td></tr><tr><td>10.10.0.80</td><td>10.10.1.13</td><td>10</td><td>810</td><td>TCP</td></tr><tr><td>10.10.1.11</td><td>203.0.113.55</td><td>10</td><td>840</td><td>TCP</td></tr><tr><td>10.10.0.20</td><td>10.10.1.11</td><td>10</td><td>748</td><td>TCP</td></tr><tr><td>10.10.0.20</td><td>10.10.1.12</td><td>10</td><td>748</td><td>TCP</td></tr><tr><td>10.10.1.14</td><td>203.0.113.55</td><td>10</td><td>840</td><td>TCP</td></tr></table></div>
+</div>
+<h3 style="margin-top:16px">Findings (2)</h3>
+
+<div class="card">
+  <span class="badge CRITICAL">CRITICAL</span>
+  <strong>IP 10.10.0.1 claimed by 2 different MAC addresses</strong> <span class="muted">&middot; arp_spoof &middot; T1557.002</span>
+  <p>ARP replies for 10.10.0.1 were sent from 00:1c:73:aa:00:01, de:ad:be:ef:00:66. A single IP must map to one MAC on a LAN; two claimants means either an IP conflict or an attacker rewriting the ARP cache of victims to intercept traffic (MITM). de:ad:be:ef:00:66 issued 25 replies versus 13 from 00:1c:73:aa:00:01.</p>
+  <dl>
+    <dt>Indicators</dt><dd><code>{&quot;ip&quot;: &quot;10.10.0.1&quot;, &quot;suspect_mac&quot;: &quot;de:ad:be:ef:00:66&quot;, &quot;legitimate_mac&quot;: &quot;00:1c:73:aa:00:01&quot;, &quot;all_macs&quot;: {&quot;00:1c:73:aa:00:01&quot;: 13, &quot;de:ad:be:ef:00:66&quot;: 25}}</code></dd>
+    <dt>Evidence</dt><dd><code>{&quot;replies_per_mac&quot;: {&quot;00:1c:73:aa:00:01&quot;: 13, &quot;de:ad:be:ef:00:66&quot;: 25}}</code></dd>
+    <dt>Wireshark display filter</dt><dd><code>arp.src.proto_ipv4 == 10.10.0.1 &amp;&amp; arp.opcode == 2</code></dd>
+  </dl>
+</div>
+
+<div class="card">
+  <span class="badge HIGH">HIGH</span>
+  <strong>45 unsolicited ARP replies from de:ad:be:ef:00:66</strong> <span class="muted">&middot; arp_spoof &middot; T1557.002</span>
+  <p>MAC de:ad:be:ef:00:66 sent 45 ARP &#x27;is-at&#x27; replies that were not preceded by a &#x27;who-has&#x27; request within 2s, claiming to be 10.10.0.1, 10.10.1.11. Unsolicited replies are how poisoning tools keep victim caches overwritten. It sent 50 replies total against 0 requests.</p>
+  <dl>
+    <dt>Indicators</dt><dd><code>{&quot;mac&quot;: &quot;de:ad:be:ef:00:66&quot;, &quot;claimed_ips&quot;: [&quot;10.10.0.1&quot;, &quot;10.10.1.11&quot;]}</code></dd>
+    <dt>Evidence</dt><dd><code>{&quot;unsolicited_replies&quot;: 45, &quot;total_replies&quot;: 50, &quot;total_requests&quot;: 0, &quot;gratuitous&quot;: 0}</code></dd>
+    <dt>Wireshark display filter</dt><dd><code>arp.opcode == 2 &amp;&amp; eth.src == de:ad:be:ef:00:66</code></dd>
+  </dl>
+</div>
+
+
+
+<h2 id="cap1">pcaps/baseline.pcap</h2>
+<div class="grid">
+  <div class="card"><h3>Capture facts</h3>
+    <table>
+    <tr><td>Packets</td><td>860</td></tr>
+    <tr><td>Bytes</td><td>70314</td></tr>
+    <tr><td>Duration</td><td>301.31 s</td></tr>
+    <tr><td>DNS queries</td><td>37 (5 unique)</td></tr>
+    <tr><td>ARP packets</td><td>22</td></tr>
+    <tr><td>HTTP requests</td><td>15</td></tr>
+    </table></div>
+  <div class="card"><h3>Protocol hierarchy</h3><table><tr><td>ETH/IP/TCP</td><td>665</td></tr><tr><td>ETH/IP/UDP/DNS</td><td>74</td></tr><tr><td>ETH/IP/UDP</td><td>42</td></tr><tr><td>ETH/IP/ICMP</td><td>42</td></tr><tr><td>ETH/ARP</td><td>22</td></tr><tr><td>ETH/IP/TCP/HTTP</td><td>15</td></tr></table></div>
+  <div class="card"><h3>Top talkers</h3><table><tr><th>Address</th><th>Packets</th><th>Bytes</th></tr><tr><td>10.10.1.15</td><td>186</td><td>15594</td></tr><tr><td>10.10.1.14</td><td>176</td><td>14500</td></tr><tr><td>10.10.1.13</td><td>172</td><td>14196</td></tr><tr><td>10.10.1.12</td><td>164</td><td>13476</td></tr><tr><td>10.10.0.20</td><td>160</td><td>11968</td></tr><tr><td>10.10.0.80</td><td>150</td><td>12150</td></tr><tr><td>10.10.1.11</td><td>140</td><td>11624</td></tr><tr><td>198.51.100.123</td><td>122</td><td>10500</td></tr><tr><td>203.0.113.10</td><td>100</td><td>8400</td></tr><tr><td>203.0.113.55</td><td>80</td><td>6720</td></tr></table></div>
+  <div class="card"><h3>Top conversations</h3><table><tr><th>A</th><th>B</th><th>Pkts</th><th>Bytes</th><th>Proto</th></tr><tr><td>10.10.0.20</td><td>10.10.1.12</td><td>50</td><td>3740</td><td>TCP</td></tr><tr><td>10.10.1.13</td><td>203.0.113.10</td><td>50</td><td>4200</td><td>TCP</td></tr><tr><td>10.10.0.80</td><td>10.10.1.11</td><td>50</td><td>4050</td><td>TCP</td></tr><tr><td>10.10.0.80</td><td>10.10.1.15</td><td>40</td><td>3240</td><td>TCP</td></tr><tr><td>10.10.0.20</td><td>10.10.1.13</td><td>40</td><td>2992</td><td>TCP</td></tr><tr><td>10.10.1.15</td><td>198.51.100.123</td><td>40</td><td>3420</td><td>TCP,UDP</td></tr><tr><td>10.10.1.13</td><td>198.51.100.123</td><td>38</td><td>3240</td><td>TCP,UDP</td></tr><tr><td>10.10.1.14</td><td>203.0.113.55</td><td>30</td><td>2520</td><td>TCP</td></tr><tr><td>10.10.0.80</td><td>10.10.1.12</td><td>30</td><td>2430</td><td>TCP</td></tr><tr><td>10.10.0.20</td><td>10.10.1.11</td><td>30</td><td>2244</td><td>TCP</td></tr></table></div>
+</div>
+<h3 style="margin-top:16px">Findings (0)</h3>
+<p class="muted">No findings.</p>
+
+
+<h2 id="cap2">pcaps/c2_beacon.pcap</h2>
+<div class="grid">
+  <div class="card"><h3>Capture facts</h3>
+    <table>
+    <tr><td>Packets</td><td>242</td></tr>
+    <tr><td>Bytes</td><td>19093</td></tr>
+    <tr><td>Duration</td><td>480.68 s</td></tr>
+    <tr><td>DNS queries</td><td>5 (3 unique)</td></tr>
+    <tr><td>ARP packets</td><td>0</td></tr>
+    <tr><td>HTTP requests</td><td>18</td></tr>
+    </table></div>
+  <div class="card"><h3>Protocol hierarchy</h3><table><tr><td>ETH/IP/TCP</td><td>202</td></tr><tr><td>ETH/IP/TCP/HTTP</td><td>18</td></tr><tr><td>ETH/IP/UDP/DNS</td><td>10</td></tr><tr><td>ETH/IP/UDP</td><td>6</td></tr><tr><td>ETH/IP/ICMP</td><td>6</td></tr></table></div>
+  <div class="card"><h3>Top talkers</h3><table><tr><th>Address</th><th>Packets</th><th>Bytes</th></tr><tr><td>10.10.1.14</td><td>164</td><td>12499</td></tr><tr><td>198.51.100.77</td><td>150</td><td>11325</td></tr><tr><td>10.10.1.11</td><td>44</td><td>3618</td></tr><tr><td>10.10.0.80</td><td>30</td><td>2430</td></tr><tr><td>10.10.1.12</td><td>24</td><td>2028</td></tr><tr><td>203.0.113.40</td><td>20</td><td>1680</td></tr><tr><td>203.0.113.55</td><td>20</td><td>1680</td></tr><tr><td>10.10.0.53</td><td>10</td><td>850</td></tr><tr><td>10.10.1.15</td><td>10</td><td>948</td></tr><tr><td>198.51.100.123</td><td>6</td><td>540</td></tr></table></div>
+  <div class="card"><h3>Top conversations</h3><table><tr><th>A</th><th>B</th><th>Pkts</th><th>Bytes</th><th>Proto</th></tr><tr><td>10.10.1.14</td><td>198.51.100.77</td><td>150</td><td>11325</td><td>TCP</td></tr><tr><td>10.10.0.80</td><td>10.10.1.11</td><td>30</td><td>2430</td><td>TCP</td></tr><tr><td>10.10.1.12</td><td>203.0.113.55</td><td>20</td><td>1680</td><td>TCP</td></tr><tr><td>10.10.1.11</td><td>203.0.113.40</td><td>10</td><td>840</td><td>TCP</td></tr><tr><td>10.10.1.14</td><td>203.0.113.40</td><td>10</td><td>840</td><td>TCP</td></tr><tr><td>10.10.0.1</td><td>10.10.1.15</td><td>6</td><td>588</td><td>ICMP</td></tr><tr><td>10.10.1.15</td><td>198.51.100.123</td><td>4</td><td>360</td><td>UDP</td></tr><tr><td>10.10.0.53</td><td>10.10.1.14</td><td>4</td><td>334</td><td>UDP</td></tr><tr><td>10.10.0.53</td><td>10.10.1.12</td><td>4</td><td>348</td><td>UDP</td></tr><tr><td>10.10.0.53</td><td>10.10.1.11</td><td>2</td><td>168</td><td>UDP</td></tr></table></div>
+</div>
+<h3 style="margin-top:16px">Findings (1)</h3>
+
+<div class="card">
+  <span class="badge HIGH">HIGH</span>
+  <strong>Periodic beacon 10.10.1.14 -&gt; 198.51.100.77:80 every ~30.0s (15 connections)</strong> <span class="muted">&middot; beacon &middot; T1071.001</span>
+  <p>15 new TCP connections from 10.10.1.14 to 198.51.100.77:80 with a mean gap of 29.97s and standard deviation 0.97s (coefficient of variation 0.032). Human-driven traffic does not keep a schedule this tight; this matches a malware implant polling its command-and-control server. Hosts: cdn.example.net. URIs: /api/v2/status?id=2541, /api/v2/status?id=3244, /api/v2/status?id=3707, /api/v2/status?id=5526, /api/v2/status?id=5885, /api/v2/status?id=6569, /api/v2/status?id=6572, /api/v2/status?id=6815, /api/v2/status?id=7284, /api/v2/status?id=7496, /api/v2/status?id=7761, /api/v2/status?id=8446, /api/v2/status?id=9021, /api/v2/status?id=9128, /api/v2/status?id=9721.</p>
+  <dl>
+    <dt>Indicators</dt><dd><code>{&quot;source&quot;: &quot;10.10.1.14&quot;, &quot;c2_server&quot;: &quot;198.51.100.77&quot;, &quot;port&quot;: 80, &quot;http_hosts&quot;: [&quot;cdn.example.net&quot;], &quot;uris&quot;: [&quot;/api/v2/status?id=2541&quot;, &quot;/api/v2/status?id=3244&quot;, &quot;/api/v2/status?id=3707&quot;, &quot;/api/v2/status?id=5526&quot;, &quot;/api/v2/status?id=5885&quot;, &quot;/api/v2/status?id=6569&quot;, &quot;/api/v2/status?id=6572&quot;, &quot;/api/v2/status?id=6815&quot;, &quot;/api/v2/status?id=7284&quot;, &quot;/api/v2/status?id=7496&quot;, &quot;/api/v2/status?id=7761&quot;, &quot;/api/v2/status?id=8446&quot;, &quot;/api/v2/status?id=9021&quot;, &quot;/api/v2/status?id=9128&quot;, &quot;/api/v2/status?id=9721&quot;]}</code></dd>
+    <dt>Evidence</dt><dd><code>{&quot;connections&quot;: 15, &quot;mean_interval_s&quot;: 29.973, &quot;stdev_interval_s&quot;: 0.966, &quot;coefficient_of_variation&quot;: 0.0322, &quot;request_size_cv&quot;: 0.0, &quot;first_seen&quot;: 1773478821.171479, &quot;last_seen&quot;: 1773479240.789855}</code></dd>
+    <dt>Wireshark display filter</dt><dd><code>ip.src == 10.10.1.14 &amp;&amp; ip.dst == 198.51.100.77 &amp;&amp; tcp.dstport == 80 &amp;&amp; tcp.flags.syn == 1 &amp;&amp; tcp.flags.ack == 0</code></dd>
+  </dl>
+</div>
+
+
+
+<h2 id="cap3">pcaps/dns_tunnel.pcap</h2>
+<div class="grid">
+  <div class="card"><h3>Capture facts</h3>
+    <table>
+    <tr><td>Packets</td><td>248</td></tr>
+    <tr><td>Bytes</td><td>31210</td></tr>
+    <tr><td>Duration</td><td>85.49 s</td></tr>
+    <tr><td>DNS queries</td><td>65 (63 unique)</td></tr>
+    <tr><td>ARP packets</td><td>2</td></tr>
+    <tr><td>HTTP requests</td><td>1</td></tr>
+    </table></div>
+  <div class="card"><h3>Protocol hierarchy</h3><table><tr><td>ETH/IP/UDP/DNS</td><td>130</td></tr><tr><td>ETH/IP/TCP</td><td>109</td></tr><tr><td>ETH/IP/ICMP</td><td>6</td></tr><tr><td>ETH/ARP</td><td>2</td></tr><tr><td>ETH/IP/TCP/HTTP</td><td>1</td></tr></table></div>
+  <div class="card"><h3>Top talkers</h3><table><tr><th>Address</th><th>Packets</th><th>Bytes</th></tr><tr><td>10.10.1.12</td><td>136</td><td>22276</td></tr><tr><td>198.51.100.53</td><td>120</td><td>20940</td></tr><tr><td>10.10.1.15</td><td>64</td><td>5074</td></tr><tr><td>10.10.0.20</td><td>50</td><td>3740</td></tr><tr><td>10.10.1.13</td><td>34</td><td>2768</td></tr><tr><td>203.0.113.10</td><td>20</td><td>1680</td></tr><tr><td>203.0.113.55</td><td>20</td><td>1680</td></tr><tr><td>10.10.1.11</td><td>12</td><td>1008</td></tr><tr><td>10.10.0.53</td><td>10</td><td>848</td></tr><tr><td>203.0.113.40</td><td>10</td><td>840</td></tr></table></div>
+  <div class="card"><h3>Top conversations</h3><table><tr><th>A</th><th>B</th><th>Pkts</th><th>Bytes</th><th>Proto</th></tr><tr><td>10.10.1.12</td><td>198.51.100.53</td><td>120</td><td>20940</td><td>UDP</td></tr><tr><td>10.10.0.20</td><td>10.10.1.15</td><td>30</td><td>2244</td><td>TCP</td></tr><tr><td>10.10.1.13</td><td>203.0.113.10</td><td>10</td><td>840</td><td>TCP</td></tr><tr><td>10.10.1.11</td><td>203.0.113.40</td><td>10</td><td>840</td><td>TCP</td></tr><tr><td>10.10.0.20</td><td>10.10.1.13</td><td>10</td><td>748</td><td>TCP</td></tr><tr><td>10.10.1.15</td><td>203.0.113.10</td><td>10</td><td>840</td><td>TCP</td></tr><tr><td>10.10.0.20</td><td>10.10.1.12</td><td>10</td><td>748</td><td>TCP</td></tr><tr><td>10.10.1.13</td><td>203.0.113.55</td><td>10</td><td>840</td><td>TCP</td></tr><tr><td>10.10.0.80</td><td>10.10.1.15</td><td>10</td><td>810</td><td>TCP</td></tr><tr><td>10.10.1.15</td><td>203.0.113.55</td><td>10</td><td>840</td><td>TCP</td></tr></table></div>
+</div>
+<h3 style="margin-top:16px">Findings (1)</h3>
+
+<div class="card">
+  <span class="badge HIGH">HIGH</span>
+  <strong>Probable DNS tunnel to exfil-example.net (60 unique subdomains)</strong> <span class="muted">&middot; dns_tunnel &middot; T1071.004</span>
+  <p>60 queries from 10.10.1.12 produced 60 distinct subdomains of exfil-example.net; 100% of them have labels &gt;= 30 chars or entropy &gt;= 3.5 bits/char (mean entropy 4.70, longest label 40). Query rate 1.66/s; record types {&#x27;TXT&#x27;: 60}. Example: rqpe6cbm2jygnebggdn7cpstkjckkxnbzocibxhf.l4oj6rfdnv2anq57smoywndsi4uz35.t1.exfil-example.net</p>
+  <dl>
+    <dt>Indicators</dt><dd><code>{&quot;domain&quot;: &quot;exfil-example.net&quot;, &quot;clients&quot;: [&quot;10.10.1.12&quot;], &quot;example_query&quot;: &quot;rqpe6cbm2jygnebggdn7cpstkjckkxnbzocibxhf.l4oj6rfdnv2anq57smoywndsi4uz35.t1.exfil-example.net&quot;}</code></dd>
+    <dt>Evidence</dt><dd><code>{&quot;queries&quot;: 60, &quot;unique_subdomains&quot;: 60, &quot;suspicious_ratio&quot;: 1.0, &quot;mean_entropy&quot;: 4.696, &quot;longest_label&quot;: 40, &quot;queries_per_second&quot;: 1.659, &quot;qtypes&quot;: {&quot;TXT&quot;: 60}}</code></dd>
+    <dt>Wireshark display filter</dt><dd><code>dns.qry.name contains &quot;exfil-example.net&quot; &amp;&amp; dns.flags.response == 0</code></dd>
+  </dl>
+</div>
+
+
+
+<h2 id="cap4">pcaps/http_credentials.pcap</h2>
+<div class="grid">
+  <div class="card"><h3>Capture facts</h3>
+    <table>
+    <tr><td>Packets</td><td>124</td></tr>
+    <tr><td>Bytes</td><td>10143</td></tr>
+    <tr><td>Duration</td><td>46.93 s</td></tr>
+    <tr><td>DNS queries</td><td>3 (2 unique)</td></tr>
+    <tr><td>ARP packets</td><td>0</td></tr>
+    <tr><td>HTTP requests</td><td>3</td></tr>
+    </table></div>
+  <div class="card"><h3>Protocol hierarchy</h3><table><tr><td>ETH/IP/TCP</td><td>97</td></tr><tr><td>ETH/IP/ICMP</td><td>12</td></tr><tr><td>ETH/IP/UDP</td><td>6</td></tr><tr><td>ETH/IP/UDP/DNS</td><td>6</td></tr><tr><td>ETH/IP/TCP/HTTP</td><td>3</td></tr></table></div>
+  <div class="card"><h3>Top talkers</h3><table><tr><th>Address</th><th>Packets</th><th>Bytes</th></tr><tr><td>10.10.1.13</td><td>48</td><td>3869</td></tr><tr><td>10.10.0.20</td><td>40</td><td>2992</td></tr><tr><td>10.10.0.80</td><td>30</td><td>2415</td></tr><tr><td>10.10.1.15</td><td>26</td><td>2192</td></tr><tr><td>10.10.1.11</td><td>26</td><td>2146</td></tr><tr><td>10.10.1.12</td><td>22</td><td>1756</td></tr><tr><td>203.0.113.25</td><td>20</td><td>1680</td></tr><tr><td>10.10.0.1</td><td>12</td><td>1176</td></tr><tr><td>203.0.113.40</td><td>10</td><td>840</td></tr><tr><td>198.51.100.123</td><td>6</td><td>540</td></tr></table></div>
+  <div class="card"><h3>Top conversations</h3><table><tr><th>A</th><th>B</th><th>Pkts</th><th>Bytes</th><th>Proto</th></tr><tr><td>10.10.1.15</td><td>203.0.113.25</td><td>20</td><td>1680</td><td>TCP</td></tr><tr><td>10.10.0.20</td><td>10.10.1.13</td><td>20</td><td>1496</td><td>TCP</td></tr><tr><td>10.10.0.80</td><td>10.10.1.13</td><td>20</td><td>1605</td><td>TCP</td></tr><tr><td>10.10.1.12</td><td>203.0.113.40</td><td>10</td><td>840</td><td>TCP</td></tr><tr><td>10.10.0.20</td><td>10.10.1.11</td><td>10</td><td>748</td><td>TCP</td></tr><tr><td>10.10.0.20</td><td>10.10.1.12</td><td>10</td><td>748</td><td>TCP</td></tr><tr><td>10.10.0.80</td><td>10.10.1.11</td><td>10</td><td>810</td><td>TCP</td></tr><tr><td>10.10.0.1</td><td>10.10.1.11</td><td>6</td><td>588</td><td>ICMP</td></tr><tr><td>10.10.0.1</td><td>10.10.1.13</td><td>6</td><td>588</td><td>ICMP</td></tr><tr><td>10.10.0.53</td><td>10.10.1.15</td><td>4</td><td>332</td><td>UDP</td></tr></table></div>
+</div>
+<h3 style="margin-top:16px">Findings (2)</h3>
+
+<div class="card">
+  <span class="badge HIGH">HIGH</span>
+  <strong>Cleartext HTTP Basic credential from 10.10.1.13 to 10.10.0.80:80</strong> <span class="muted">&middot; credentials &middot; T1040</span>
+  <p>Frame 64: HTTP GET /admin on host intranet.corp.example carried an Authorization: Basic header (base64 is encoding, not encryption). Username &#x27;admin&#x27; and a secret (&#x27;Pa*********&#x27;, 11 chars) crossed the network unencrypted; anyone on the path (or a MITM) can harvest them.</p>
+  <dl>
+    <dt>Indicators</dt><dd><code>{&quot;client&quot;: &quot;10.10.1.13&quot;, &quot;server&quot;: &quot;10.10.0.80&quot;, &quot;port&quot;: 80, &quot;username&quot;: &quot;admin&quot;, &quot;protocol&quot;: &quot;HTTP Basic&quot;}</code></dd>
+    <dt>Evidence</dt><dd><code>{&quot;frame&quot;: 64, &quot;secret_masked&quot;: &quot;Pa*********&quot;, &quot;secret_length&quot;: 11}</code></dd>
+    <dt>Wireshark display filter</dt><dd><code>http.authorization contains &quot;Basic&quot;</code></dd>
+  </dl>
+</div>
+
+<div class="card">
+  <span class="badge HIGH">HIGH</span>
+  <strong>Cleartext HTTP form POST credential from 10.10.1.13 to 10.10.0.80:80</strong> <span class="muted">&middot; credentials &middot; T1040</span>
+  <p>Frame 54: HTTP POST /login to host intranet.corp.example submitted a form with a password field (username, password, submit). Username &#x27;jscirica&#x27; and a secret (&#x27;Su**********&#x27;, 12 chars) crossed the network unencrypted; anyone on the path (or a MITM) can harvest them.</p>
+  <dl>
+    <dt>Indicators</dt><dd><code>{&quot;client&quot;: &quot;10.10.1.13&quot;, &quot;server&quot;: &quot;10.10.0.80&quot;, &quot;port&quot;: 80, &quot;username&quot;: &quot;jscirica&quot;, &quot;protocol&quot;: &quot;HTTP form POST&quot;}</code></dd>
+    <dt>Evidence</dt><dd><code>{&quot;frame&quot;: 54, &quot;secret_masked&quot;: &quot;Su**********&quot;, &quot;secret_length&quot;: 12}</code></dd>
+    <dt>Wireshark display filter</dt><dd><code>http.request.method == &quot;POST&quot; &amp;&amp; urlencoded-form.key contains &quot;pass&quot;</code></dd>
+  </dl>
+</div>
+
+
+
+<h2 id="cap5">pcaps/icmp_exfil.pcap</h2>
+<div class="grid">
+  <div class="card"><h3>Capture facts</h3>
+    <table>
+    <tr><td>Packets</td><td>128</td></tr>
+    <tr><td>Bytes</td><td>47224</td></tr>
+    <tr><td>Duration</td><td>41.36 s</td></tr>
+    <tr><td>DNS queries</td><td>2 (2 unique)</td></tr>
+    <tr><td>ARP packets</td><td>2</td></tr>
+    <tr><td>HTTP requests</td><td>2</td></tr>
+    </table></div>
+  <div class="card"><h3>Protocol hierarchy</h3><table><tr><td>ETH/IP/ICMP</td><td>72</td></tr><tr><td>ETH/IP/TCP</td><td>48</td></tr><tr><td>ETH/IP/UDP/DNS</td><td>4</td></tr><tr><td>ETH/IP/TCP/HTTP</td><td>2</td></tr><tr><td>ETH/ARP</td><td>2</td></tr></table></div>
+  <div class="card"><h3>Top talkers</h3><table><tr><th>Address</th><th>Packets</th><th>Bytes</th></tr><tr><td>10.10.1.15</td><td>60</td><td>41572</td></tr><tr><td>198.51.100.77</td><td>60</td><td>41572</td></tr><tr><td>10.10.1.11</td><td>30</td><td>2368</td></tr><tr><td>10.10.0.80</td><td>20</td><td>1620</td></tr><tr><td>10.10.1.12</td><td>18</td><td>1596</td></tr><tr><td>10.10.1.13</td><td>18</td><td>1604</td></tr><tr><td>10.10.0.1</td><td>12</td><td>1176</td></tr><tr><td>203.0.113.40</td><td>10</td><td>840</td></tr><tr><td>10.10.0.20</td><td>10</td><td>748</td></tr><tr><td>198.51.100.123</td><td>10</td><td>840</td></tr></table></div>
+  <div class="card"><h3>Top conversations</h3><table><tr><th>A</th><th>B</th><th>Pkts</th><th>Bytes</th><th>Proto</th></tr><tr><td>10.10.1.15</td><td>198.51.100.77</td><td>60</td><td>41572</td><td>ICMP</td></tr><tr><td>10.10.0.80</td><td>10.10.1.11</td><td>20</td><td>1620</td><td>TCP</td></tr><tr><td>10.10.1.12</td><td>203.0.113.40</td><td>10</td><td>840</td><td>TCP</td></tr><tr><td>10.10.0.20</td><td>10.10.1.11</td><td>10</td><td>748</td><td>TCP</td></tr><tr><td>10.10.1.13</td><td>198.51.100.123</td><td>10</td><td>840</td><td>TCP</td></tr><tr><td>10.10.0.1</td><td>10.10.1.12</td><td>6</td><td>588</td><td>ICMP</td></tr><tr><td>10.10.0.1</td><td>10.10.1.13</td><td>6</td><td>588</td><td>ICMP</td></tr><tr><td>10.10.0.53</td><td>10.10.1.12</td><td>2</td><td>168</td><td>UDP</td></tr><tr><td>10.10.0.53</td><td>10.10.1.13</td><td>2</td><td>176</td><td>UDP</td></tr></table></div>
+</div>
+<h3 style="margin-top:16px">Findings (1)</h3>
+
+<div class="card">
+  <span class="badge HIGH">HIGH</span>
+  <strong>ICMP tunnel / exfiltration 10.10.1.15 -&gt; 198.51.100.77 (19526 payload bytes)</strong> <span class="muted">&middot; icmp_exfil &middot; T1048</span>
+  <p>30 echo requests from 10.10.1.15 to 198.51.100.77: oversized payloads; payload changes every packet; high-entropy payload. Mean payload 651 bytes, 100% unique payloads, mean entropy 7.67 bits/byte. A real ping repeats a fixed 32/56-byte pattern.</p>
+  <dl>
+    <dt>Indicators</dt><dd><code>{&quot;source&quot;: &quot;10.10.1.15&quot;, &quot;destination&quot;: &quot;198.51.100.77&quot;}</code></dd>
+    <dt>Evidence</dt><dd><code>{&quot;echo_requests&quot;: 30, &quot;payload_bytes&quot;: 19526, &quot;mean_payload_size&quot;: 650.9, &quot;unique_payload_ratio&quot;: 1.0, &quot;mean_entropy&quot;: 7.673}</code></dd>
+    <dt>Wireshark display filter</dt><dd><code>icmp.type == 8 &amp;&amp; ip.src == 10.10.1.15 &amp;&amp; data.len &gt; 64</code></dd>
+  </dl>
+</div>
+
+
+
+<h2 id="cap6">pcaps/port_scan.pcap</h2>
+<div class="grid">
+  <div class="card"><h3>Capture facts</h3>
+    <table>
+    <tr><td>Packets</td><td>589</td></tr>
+    <tr><td>Bytes</td><td>37284</td></tr>
+    <tr><td>Duration</td><td>76.06 s</td></tr>
+    <tr><td>DNS queries</td><td>9 (3 unique)</td></tr>
+    <tr><td>ARP packets</td><td>2</td></tr>
+    <tr><td>HTTP requests</td><td>4</td></tr>
+    </table></div>
+  <div class="card"><h3>Protocol hierarchy</h3><table><tr><td>ETH/IP/TCP</td><td>561</td></tr><tr><td>ETH/IP/UDP/DNS</td><td>18</td></tr><tr><td>ETH/IP/TCP/HTTP</td><td>4</td></tr><tr><td>ETH/IP/UDP</td><td>4</td></tr><tr><td>ETH/ARP</td><td>2</td></tr></table></div>
+  <div class="card"><h3>Top talkers</h3><table><tr><th>Address</th><th>Packets</th><th>Bytes</th></tr><tr><td>10.10.0.20</td><td>435</td><td>24530</td></tr><tr><td>10.10.1.66</td><td>385</td><td>20790</td></tr><tr><td>10.10.1.11</td><td>100</td><td>8078</td></tr><tr><td>10.10.1.14</td><td>44</td><td>3572</td></tr><tr><td>203.0.113.40</td><td>40</td><td>3360</td></tr><tr><td>203.0.113.10</td><td>40</td><td>3360</td></tr><tr><td>10.10.0.80</td><td>40</td><td>3240</td></tr><tr><td>10.10.1.12</td><td>34</td><td>2764</td></tr><tr><td>10.10.0.53</td><td>18</td><td>1510</td></tr><tr><td>10.10.1.13</td><td>12</td><td>990</td></tr></table></div>
+  <div class="card"><h3>Top conversations</h3><table><tr><th>A</th><th>B</th><th>Pkts</th><th>Bytes</th><th>Proto</th></tr><tr><td>10.10.0.20</td><td>10.10.1.66</td><td>385</td><td>20790</td><td>TCP</td></tr><tr><td>10.10.0.20</td><td>10.10.1.11</td><td>30</td><td>2244</td><td>TCP</td></tr><tr><td>10.10.1.11</td><td>203.0.113.10</td><td>20</td><td>1680</td><td>TCP</td></tr><tr><td>10.10.0.80</td><td>10.10.1.11</td><td>20</td><td>1620</td><td>TCP</td></tr><tr><td>10.10.1.12</td><td>203.0.113.40</td><td>20</td><td>1680</td><td>TCP</td></tr><tr><td>10.10.1.11</td><td>203.0.113.40</td><td>10</td><td>840</td><td>TCP</td></tr><tr><td>10.10.0.20</td><td>10.10.1.14</td><td>10</td><td>748</td><td>TCP</td></tr><tr><td>10.10.1.14</td><td>203.0.113.10</td><td>10</td><td>840</td><td>TCP</td></tr><tr><td>10.10.0.80</td><td>10.10.1.13</td><td>10</td><td>810</td><td>TCP</td></tr><tr><td>10.10.1.11</td><td>203.0.113.55</td><td>10</td><td>840</td><td>TCP</td></tr></table></div>
+</div>
+<h3 style="margin-top:16px">Findings (1)</h3>
+
+<div class="card">
+  <span class="badge HIGH">HIGH</span>
+  <strong>TCP SYN scan from 10.10.1.66 (190 ports in 10s)</strong> <span class="muted">&middot; port_scan &middot; T1046</span>
+  <p>10.10.1.66 sent SYN probes to 190 distinct TCP ports on 1 host(s); peak of 190 unique ports inside a 10 second window. 185 probes were answered with RST (closed) and 5 with SYN/ACK (open), which is the classic half-open scan signature.</p>
+  <dl>
+    <dt>Indicators</dt><dd><code>{&quot;scanner_ip&quot;: &quot;10.10.1.66&quot;, &quot;targets&quot;: [&quot;10.10.0.20&quot;], &quot;open_ports&quot;: [22, 80, 139, 445, 3389]}</code></dd>
+    <dt>Evidence</dt><dd><code>{&quot;total_syn_probes&quot;: 190, &quot;unique_ports&quot;: 190, &quot;peak_ports_in_window&quot;: 190, &quot;window_start&quot;: 1773478842.010941, &quot;rst_responses&quot;: 185, &quot;port_range&quot;: &quot;3-8443&quot;}</code></dd>
+    <dt>Wireshark display filter</dt><dd><code>ip.src == 10.10.1.66 &amp;&amp; tcp.flags.syn == 1 &amp;&amp; tcp.flags.ack == 0</code></dd>
+  </dl>
+</div>
+
+
+
+<h2 id="cap7">pcaps/smb_lateral.pcap</h2>
+<div class="grid">
+  <div class="card"><h3>Capture facts</h3>
+    <table>
+    <tr><td>Packets</td><td>157</td></tr>
+    <tr><td>Bytes</td><td>11812</td></tr>
+    <tr><td>Duration</td><td>43.42 s</td></tr>
+    <tr><td>DNS queries</td><td>2 (2 unique)</td></tr>
+    <tr><td>ARP packets</td><td>6</td></tr>
+    <tr><td>HTTP requests</td><td>2</td></tr>
+    </table></div>
+  <div class="card"><h3>Protocol hierarchy</h3><table><tr><td>ETH/IP/TCP</td><td>133</td></tr><tr><td>ETH/IP/UDP</td><td>6</td></tr><tr><td>ETH/ARP</td><td>6</td></tr><tr><td>ETH/IP/ICMP</td><td>6</td></tr><tr><td>ETH/IP/UDP/DNS</td><td>4</td></tr><tr><td>ETH/IP/TCP/HTTP</td><td>2</td></tr></table></div>
+  <div class="card"><h3>Top talkers</h3><table><tr><th>Address</th><th>Packets</th><th>Bytes</th></tr><tr><td>10.10.1.11</td><td>95</td><td>6852</td></tr><tr><td>10.10.1.13</td><td>24</td><td>2022</td></tr><tr><td>10.10.1.12</td><td>22</td><td>1738</td></tr><tr><td>10.10.0.80</td><td>20</td><td>1620</td></tr><tr><td>198.51.100.123</td><td>16</td><td>1380</td></tr><tr><td>10.10.1.20</td><td>11</td><td>836</td></tr><tr><td>10.10.1.21</td><td>11</td><td>836</td></tr><tr><td>10.10.1.22</td><td>11</td><td>836</td></tr><tr><td>10.10.1.23</td><td>11</td><td>836</td></tr><tr><td>10.10.1.24</td><td>11</td><td>836</td></tr></table></div>
+  <div class="card"><h3>Top conversations</h3><table><tr><th>A</th><th>B</th><th>Pkts</th><th>Bytes</th><th>Proto</th></tr><tr><td>10.10.1.11</td><td>10.10.1.20</td><td>11</td><td>836</td><td>TCP</td></tr><tr><td>10.10.1.11</td><td>10.10.1.21</td><td>11</td><td>836</td><td>TCP</td></tr><tr><td>10.10.1.11</td><td>10.10.1.22</td><td>11</td><td>836</td><td>TCP</td></tr><tr><td>10.10.1.11</td><td>10.10.1.23</td><td>11</td><td>836</td><td>TCP</td></tr><tr><td>10.10.1.11</td><td>10.10.1.24</td><td>11</td><td>836</td><td>TCP</td></tr><tr><td>10.10.1.11</td><td>10.10.1.25</td><td>11</td><td>836</td><td>TCP</td></tr><tr><td>10.10.1.13</td><td>198.51.100.123</td><td>10</td><td>840</td><td>TCP</td></tr><tr><td>10.10.0.20</td><td>10.10.1.12</td><td>10</td><td>748</td><td>TCP</td></tr><tr><td>10.10.0.80</td><td>10.10.1.11</td><td>10</td><td>810</td><td>TCP</td></tr><tr><td>10.10.1.13</td><td>203.0.113.10</td><td>10</td><td>840</td><td>TCP</td></tr></table></div>
+</div>
+<h3 style="margin-top:16px">Findings (1)</h3>
+
+<div class="card">
+  <span class="badge CRITICAL">CRITICAL</span>
+  <strong>SMB lateral-movement burst from 10.10.1.11 to 25 hosts</strong> <span class="muted">&middot; smb_lateral &middot; T1021.002</span>
+  <p>10.10.1.11 opened TCP/445 sessions to 25 distinct hosts within 60s (31 SYNs total). 6 SMB2 SESSION_SETUP requests were seen and TREE_CONNECT to administrative shares ADMIN$. Workstations do not normally fan out over SMB like this; it matches PsExec-style remote execution or worm propagation.</p>
+  <dl>
+    <dt>Indicators</dt><dd><code>{&quot;source&quot;: &quot;10.10.1.11&quot;, &quot;targets&quot;: [&quot;10.10.1.20&quot;, &quot;10.10.1.21&quot;, &quot;10.10.1.22&quot;, &quot;10.10.1.23&quot;, &quot;10.10.1.24&quot;, &quot;10.10.1.25&quot;, &quot;10.10.1.26&quot;, &quot;10.10.1.27&quot;, &quot;10.10.1.28&quot;, &quot;10.10.1.29&quot;, &quot;10.10.1.30&quot;, &quot;10.10.1.31&quot;, &quot;10.10.1.32&quot;, &quot;10.10.1.33&quot;, &quot;10.10.1.34&quot;, &quot;10.10.1.35&quot;, &quot;10.10.1.36&quot;, &quot;10.10.1.37&quot;, &quot;10.10.1.38&quot;, &quot;10.10.1.39&quot;, &quot;10.10.1.40&quot;, &quot;10.10.1.41&quot;, &quot;10.10.1.42&quot;, &quot;10.10.1.43&quot;, &quot;10.10.1.44&quot;], &quot;admin_shares&quot;: [&quot;ADMIN$&quot;]}</code></dd>
+    <dt>Evidence</dt><dd><code>{&quot;distinct_peers_in_window&quot;: 25, &quot;total_syns&quot;: 31, &quot;session_setups&quot;: 6}</code></dd>
+    <dt>Wireshark display filter</dt><dd><code>ip.src == 10.10.1.11 &amp;&amp; tcp.dstport == 445 &amp;&amp; tcp.flags.syn == 1 &amp;&amp; tcp.flags.ack == 0</code></dd>
+  </dl>
+</div>
+
+
+</main>
+</body>
+</html>

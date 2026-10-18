@@ -1,0 +1,53 @@
+# netforensics Wireshark profile - preferences snippet
+#
+# Drop this file into a Wireshark profile directory and the forensics-oriented
+# defaults below take effect. Locate your profile folder with
+# Help > About Wireshark > Folders > "Personal configuration", then create a
+# profile:  <config>/profiles/netforensics/  and place this file as
+# "preferences" (no extension) alongside the "coloring_rules" file in this
+# repo. Switch to it from the lower-right "Profile" selector.
+#
+# Rationale: an investigation profile favours absolute/delta time, shows the
+# columns that matter for triage, and disables checksum validation (captures
+# from a NIC with offload show "bad" checksums that are not real).
+
+######## Columns ########
+# Format:  "number","Title","format"[,"fieldname"]  pipe-separated pairs.
+gui.column.format:
+	"No.","%m",
+	"Time (UTC)","%Yut",
+	"Delta","%Gt",
+	"Source","%s",
+	"S.Port","%uS",
+	"Destination","%d",
+	"D.Port","%uD",
+	"Proto","%p",
+	"Len","%L",
+	"Info","%i"
+
+######## Time display ########
+# Absolute UTC so timestamps line up with SIEM/log evidence.
+gui.time_format: ABSOLUTE_WITH_YMD
+gui.time_precision: AUTOMATIC
+
+######## Name resolution ########
+# Resolve MAC OUIs (helps spot a spoofer's vendor), but NOT network names -
+# live DNS lookups during analysis can tip off an adversary and pollute the
+# capture view.
+nameres.mac_name: TRUE
+nameres.network_name: FALSE
+nameres.transport_name: TRUE
+nameres.use_external_name_resolver: FALSE
+
+######## Protocol handling ########
+# NIC checksum offload makes locally-captured TX packets show bad checksums.
+tcp.check_checksum: FALSE
+udp.check_checksum: FALSE
+ip.check_checksum: FALSE
+# Reassemble so Follow HTTP Stream and credential fields work on split PDUs.
+tcp.desegment_tcp_streams: TRUE
+http.desegment_body: TRUE
+
+######## Capture ########
+gui.ask_unsaved: TRUE
+capture.auto_scroll: TRUE

@@ -1,0 +1,1775 @@
+{
+  "generated_at": "2026-10-18T04:06:33.027853+00:00",
+  "tool": "netforensics",
+  "captures": [
+    {
+      "pcap": "pcaps/arp_spoof.pcap",
+      "max_severity": "CRITICAL",
+      "summary": {
+        "packets": 276,
+        "bytes": 25174,
+        "first_timestamp": 1773478800.0,
+        "last_timestamp": 1773478909.272509,
+        "duration_s": 109.272509,
+        "protocol_hierarchy": {
+          "ETH/IP/TCP": 128,
+          "ETH/ARP": 76,
+          "ETH/IP/TCP/HTTP": 52,
+          "ETH/IP/UDP/DNS": 14,
+          "ETH/IP/UDP": 6
+        },
+        "top_talkers": [
+          {
+            "address": "10.10.1.11",
+            "packets": 110,
+            "bytes": 14722
+          },
+          {
+            "address": "203.0.113.10",
+            "packets": 70,
+            "bytes": 11430
+          },
+          {
+            "address": "10.10.1.14",
+            "packets": 48,
+            "bytes": 3876
+          },
+          {
+            "address": "10.10.0.20",
+            "packets": 40,
+            "bytes": 2992
+          },
+          {
+            "address": "198.51.100.123",
+            "packets": 26,
+            "bytes": 2220
+          },
+          {
+            "address": "10.10.1.12",
+            "packets": 22,
+            "bytes": 1764
+          },
+          {
+            "address": "10.10.0.80",
+            "packets": 20,
+            "bytes": 1620
+          },
+          {
+            "address": "203.0.113.55",
+            "packets": 20,
+            "bytes": 1680
+          },
+          {
+            "address": "10.10.0.53",
+            "packets": 14,
+            "bytes": 1200
+          },
+          {
+            "address": "203.0.113.40",
+            "packets": 10,
+            "bytes": 840
+          }
+        ],
+        "conversations": [
+          {
+            "a": "10.10.1.11",
+            "b": "203.0.113.10",
+            "packets": 60,
+            "bytes": 10590,
+            "protocols": [
+              "TCP"
+            ]
+          },
+          {
+            "a": "10.10.0.20",
+            "b": "10.10.1.14",
+            "packets": 20,
+            "bytes": 1496,
+            "protocols": [
+              "TCP"
+            ]
+          },
+          {
+            "a": "10.10.1.11",
+            "b": "198.51.100.123",
+            "packets": 12,
+            "bytes": 1020,
+            "protocols": [
+              "TCP",
+              "UDP"
+            ]
+          },
+          {
+            "a": "10.10.1.11",
+            "b": "203.0.113.40",
+            "packets": 10,
+            "bytes": 840,
+            "protocols": [
+              "TCP"
+            ]
+          },
+          {
+            "a": "10.10.1.14",
+            "b": "203.0.113.10",
+            "packets": 10,
+            "bytes": 840,
+            "protocols": [
+              "TCP"
+            ]
+          },
+          {
+            "a": "10.10.0.80",
+            "b": "10.10.1.13",
+            "packets": 10,
+            "bytes": 810,
+            "protocols": [
+              "TCP"
+            ]
+          },
+          {
+            "a": "10.10.1.11",
+            "b": "203.0.113.55",
+            "packets": 10,
+            "bytes": 840,
+            "protocols": [
+              "TCP"
+            ]
+          },
+          {
+            "a": "10.10.0.20",
+            "b": "10.10.1.11",
+            "packets": 10,
+            "bytes": 748,
+            "protocols": [
+              "TCP"
+            ]
+          },
+          {
+            "a": "10.10.0.20",
+            "b": "10.10.1.12",
+            "packets": 10,
+            "bytes": 748,
+            "protocols": [
+              "TCP"
+            ]
+          },
+          {
+            "a": "10.10.1.14",
+            "b": "203.0.113.55",
+            "packets": 10,
+            "bytes": 840,
+            "protocols": [
+              "TCP"
+            ]
+          }
+        ],
+        "top_ports": [
+          {
+            "port": "TCP/443",
+            "packets": 70
+          },
+          {
+            "port": "TCP/80",
+            "packets": 70
+          },
+          {
+            "port": "TCP/445",
+            "packets": 40
+          },
+          {
+            "port": "UDP/53",
+            "packets": 14
+          },
+          {
+            "port": "UDP/123",
+            "packets": 6
+          }
+        ],
+        "dns_queries": 7,
+        "unique_dns_names": 4,
+        "arp_packets": 76,
+        "http_requests": 52
+      },
+      "findings": [
+        {
+          "analyzer": "arp_spoof",
+          "title": "IP 10.10.0.1 claimed by 2 different MAC addresses",
+          "severity": "CRITICAL",
+          "description": "ARP replies for 10.10.0.1 were sent from 00:1c:73:aa:00:01, de:ad:be:ef:00:66. A single IP must map to one MAC on a LAN; two claimants means either an IP conflict or an attacker rewriting the ARP cache of victims to intercept traffic (MITM). de:ad:be:ef:00:66 issued 25 replies versus 13 from 00:1c:73:aa:00:01.",
+          "technique": "T1557.002",
+          "indicators": {
+            "ip": "10.10.0.1",
+            "suspect_mac": "de:ad:be:ef:00:66",
+            "legitimate_mac": "00:1c:73:aa:00:01",
+            "all_macs": {
+              "00:1c:73:aa:00:01": 13,
+              "de:ad:be:ef:00:66": 25
+            }
+          },
+          "evidence": {
+            "replies_per_mac": {
+              "00:1c:73:aa:00:01": 13,
+              "de:ad:be:ef:00:66": 25
+            }
+          },
+          "wireshark_filter": "arp.src.proto_ipv4 == 10.10.0.1 && arp.opcode == 2"
+        },
+        {
+          "analyzer": "arp_spoof",
+          "title": "45 unsolicited ARP replies from de:ad:be:ef:00:66",
+          "severity": "HIGH",
+          "description": "MAC de:ad:be:ef:00:66 sent 45 ARP 'is-at' replies that were not preceded by a 'who-has' request within 2s, claiming to be 10.10.0.1, 10.10.1.11. Unsolicited replies are how poisoning tools keep victim caches overwritten. It sent 50 replies total against 0 requests.",
+          "technique": "T1557.002",
+          "indicators": {
+            "mac": "de:ad:be:ef:00:66",
+            "claimed_ips": [
+              "10.10.0.1",
+              "10.10.1.11"
+            ]
+          },
+          "evidence": {
+            "unsolicited_replies": 45,
+            "total_replies": 50,
+            "total_requests": 0,
+            "gratuitous": 0
+          },
+          "wireshark_filter": "arp.opcode == 2 && eth.src == de:ad:be:ef:00:66"
+        }
+      ]
+    },
+    {
+      "pcap": "pcaps/baseline.pcap",
+      "max_severity": "INFO",
+      "summary": {
+        "packets": 860,
+        "bytes": 70314,
+        "first_timestamp": 1773478800.0,
+        "last_timestamp": 1773479101.309049,
+        "duration_s": 301.309049,
+        "protocol_hierarchy": {
+          "ETH/IP/TCP": 665,
+          "ETH/IP/UDP/DNS": 74,
+          "ETH/IP/UDP": 42,
+          "ETH/IP/ICMP": 42,
+          "ETH/ARP": 22,
+          "ETH/IP/TCP/HTTP": 15
+        },
+        "top_talkers": [
+          {
+            "address": "10.10.1.15",
+            "packets": 186,
+            "bytes": 15594
+          },
+          {
+            "address": "10.10.1.14",
+            "packets": 176,
+            "bytes": 14500
+          },
+          {
+            "address": "10.10.1.13",
+            "packets": 172,
+            "bytes": 14196
+          },
+          {
+            "address": "10.10.1.12",
+            "packets": 164,
+            "bytes": 13476
+          },
+          {
+            "address": "10.10.0.20",
+            "packets": 160,
+            "bytes": 11968
+          },
+          {
+            "address": "10.10.0.80",
+            "packets": 150,
+            "bytes": 12150
+          },
+          {
+            "address": "10.10.1.11",
+            "packets": 140,
+            "bytes": 11624
+          },
+          {
+            "address": "198.51.100.123",
+            "packets": 122,
+            "bytes": 10500
+          },
+          {
+            "address": "203.0.113.10",
+            "packets": 100,
+            "bytes": 8400
+          },
+          {
+            "address": "203.0.113.55",
+            "packets": 80,
+            "bytes": 6720
+          }
+        ],
+        "conversations": [
+          {
+            "a": "10.10.0.20",
+            "b": "10.10.1.12",
+            "packets": 50,
+            "bytes": 3740,
+            "protocols": [
+              "TCP"
+            ]
+          },
+          {
+            "a": "10.10.1.13",
+            "b": "203.0.113.10",
+            "packets": 50,
+            "bytes": 4200,
+            "protocols": [
+              "TCP"
+            ]
+          },
+          {
+            "a": "10.10.0.80",
+            "b": "10.10.1.11",
+            "packets": 50,
+            "bytes": 4050,
+            "protocols": [
+              "TCP"
+            ]
+          },
+          {
+            "a": "10.10.0.80",
+            "b": "10.10.1.15",
+            "packets": 40,
+            "bytes": 3240,
+            "protocols": [
+              "TCP"
+            ]
+          },
+          {
+            "a": "10.10.0.20",
+            "b": "10.10.1.13",
+            "packets": 40,
+            "bytes": 2992,
+            "protocols": [
+              "TCP"
+            ]
+          },
+          {
+            "a": "10.10.1.15",
+            "b": "198.51.100.123",
+            "packets": 40,
+            "bytes": 3420,
+            "protocols": [
+              "TCP",
+              "UDP"
+            ]
+          },
+          {
+            "a": "10.10.1.13",
+            "b": "198.51.100.123",
+            "packets": 38,
+            "bytes": 3240,
+            "protocols": [
+              "TCP",
+              "UDP"
+            ]
+          },
+          {
+            "a": "10.10.1.14",
+            "b": "203.0.113.55",
+            "packets": 30,
+            "bytes": 2520,
+            "protocols": [
+              "TCP"
+            ]
+          },
+          {
+            "a": "10.10.0.80",
+            "b": "10.10.1.12",
+            "packets": 30,
+            "bytes": 2430,
+            "protocols": [
+              "TCP"
+            ]
+          },
+          {
+            "a": "10.10.0.20",
+            "b": "10.10.1.11",
+            "packets": 30,
+            "bytes": 2244,
+            "protocols": [
+              "TCP"
+            ]
+          }
+        ],
+        "top_ports": [
+          {
+            "port": "TCP/443",
+            "packets": 370
+          },
+          {
+            "port": "TCP/445",
+            "packets": 160
+          },
+          {
+            "port": "TCP/80",
+            "packets": 150
+          },
+          {
+            "port": "UDP/53",
+            "packets": 74
+          },
+          {
+            "port": "UDP/123",
+            "packets": 42
+          }
+        ],
+        "dns_queries": 37,
+        "unique_dns_names": 5,
+        "arp_packets": 22,
+        "http_requests": 15
+      },
+      "findings": []
+    },
+    {
+      "pcap": "pcaps/c2_beacon.pcap",
+      "max_severity": "HIGH",
+      "summary": {
+        "packets": 242,
+        "bytes": 19093,
+        "first_timestamp": 1773478800.0,
+        "last_timestamp": 1773479280.675211,
+        "duration_s": 480.675211,
+        "protocol_hierarchy": {
+          "ETH/IP/TCP": 202,
+          "ETH/IP/TCP/HTTP": 18,
+          "ETH/IP/UDP/DNS": 10,
+          "ETH/IP/UDP": 6,
+          "ETH/IP/ICMP": 6
+        },
+        "top_talkers": [
+          {
+            "address": "10.10.1.14",
+            "packets": 164,
+            "bytes": 12499
+          },
+          {
+            "address": "198.51.100.77",
+            "packets": 150,
+            "bytes": 11325
+          },
+          {
+            "address": "10.10.1.11",
+            "packets": 44,
+            "bytes": 3618
+          },
+          {
+            "address": "10.10.0.80",
+            "packets": 30,
+            "bytes": 2430
+          },
+          {
+            "address": "10.10.1.12",
+            "packets": 24,
+            "bytes": 2028
+          },
+          {
+            "address": "203.0.113.40",
+            "packets": 20,
+            "bytes": 1680
+          },
+          {
+            "address": "203.0.113.55",
+            "packets": 20,
+            "bytes": 1680
+          },
+          {
+            "address": "10.10.0.53",
+            "packets": 10,
+            "bytes": 850
+          },
+          {
+            "address": "10.10.1.15",
+            "packets": 10,
+            "bytes": 948
+          },
+          {
+            "address": "198.51.100.123",
+            "packets": 6,
+            "bytes": 540
+          }
+        ],
+        "conversations": [
+          {
+            "a": "10.10.1.14",
+            "b": "198.51.100.77",
+            "packets": 150,
+            "bytes": 11325,
+            "protocols": [
+              "TCP"
+            ]
+          },
+          {
+            "a": "10.10.0.80",
+            "b": "10.10.1.11",
+            "packets": 30,
+            "bytes": 2430,
+            "protocols": [
+              "TCP"
+            ]
+          },
+          {
+            "a": "10.10.1.12",
+            "b": "203.0.113.55",
+            "packets": 20,
+            "bytes": 1680,
+            "protocols": [
+              "TCP"
+            ]
+          },
+          {
+            "a": "10.10.1.11",
+            "b": "203.0.113.40",
+            "packets": 10,
+            "bytes": 840,
+            "protocols": [
+              "TCP"
+            ]
+          },
+          {
+            "a": "10.10.1.14",
+            "b": "203.0.113.40",
+            "packets": 10,
+            "bytes": 840,
+            "protocols": [
+              "TCP"
+            ]
+          },
+          {
+            "a": "10.10.0.1",
+            "b": "10.10.1.15",
+            "packets": 6,
+            "bytes": 588,
+            "protocols": [
+              "ICMP"
+            ]
+          },
+          {
+            "a": "10.10.1.15",
+            "b": "198.51.100.123",
+            "packets": 4,
+            "bytes": 360,
+            "protocols": [
+              "UDP"
+            ]
+          },
+          {
+            "a": "10.10.0.53",
+            "b": "10.10.1.14",
+            "packets": 4,
+            "bytes": 334,
+            "protocols": [
+              "UDP"
+            ]
+          },
+          {
+            "a": "10.10.0.53",
+            "b": "10.10.1.12",
+            "packets": 4,
+            "bytes": 348,
+            "protocols": [
+              "UDP"
+            ]
+          },
+          {
+            "a": "10.10.0.53",
+            "b": "10.10.1.11",
+            "packets": 2,
+            "bytes": 168,
+            "protocols": [
+              "UDP"
+            ]
+          }
+        ],
+        "top_ports": [
+          {
+            "port": "TCP/80",
+            "packets": 180
+          },
+          {
+            "port": "TCP/443",
+            "packets": 40
+          },
+          {
+            "port": "UDP/53",
+            "packets": 10
+          },
+          {
+            "port": "UDP/123",
+            "packets": 6
+          }
+        ],
+        "dns_queries": 5,
+        "unique_dns_names": 3,
+        "arp_packets": 0,
+        "http_requests": 18
+      },
+      "findings": [
+        {
+          "analyzer": "beacon",
+          "title": "Periodic beacon 10.10.1.14 -> 198.51.100.77:80 every ~30.0s (15 connections)",
+          "severity": "HIGH",
+          "description": "15 new TCP connections from 10.10.1.14 to 198.51.100.77:80 with a mean gap of 29.97s and standard deviation 0.97s (coefficient of variation 0.032). Human-driven traffic does not keep a schedule this tight; this matches a malware implant polling its command-and-control server. Hosts: cdn.example.net. URIs: /api/v2/status?id=2541, /api/v2/status?id=3244, /api/v2/status?id=3707, /api/v2/status?id=5526, /api/v2/status?id=5885, /api/v2/status?id=6569, /api/v2/status?id=6572, /api/v2/status?id=6815, /api/v2/status?id=7284, /api/v2/status?id=7496, /api/v2/status?id=7761, /api/v2/status?id=8446, /api/v2/status?id=9021, /api/v2/status?id=9128, /api/v2/status?id=9721.",
+          "technique": "T1071.001",
+          "indicators": {
+            "source": "10.10.1.14",
+            "c2_server": "198.51.100.77",
+            "port": 80,
+            "http_hosts": [
+              "cdn.example.net"
+            ],
+            "uris": [
+              "/api/v2/status?id=2541",
+              "/api/v2/status?id=3244",
+              "/api/v2/status?id=3707",
+              "/api/v2/status?id=5526",
+              "/api/v2/status?id=5885",
+              "/api/v2/status?id=6569",
+              "/api/v2/status?id=6572",
+              "/api/v2/status?id=6815",
+              "/api/v2/status?id=7284",
+              "/api/v2/status?id=7496",
+              "/api/v2/status?id=7761",
+              "/api/v2/status?id=8446",
+              "/api/v2/status?id=9021",
+              "/api/v2/status?id=9128",
+              "/api/v2/status?id=9721"
+            ]
+          },
+          "evidence": {
+            "connections": 15,
+            "mean_interval_s": 29.973,
+            "stdev_interval_s": 0.966,
+            "coefficient_of_variation": 0.0322,
+            "request_size_cv": 0.0,
+            "first_seen": 1773478821.171479,
+            "last_seen": 1773479240.789855
+          },
+          "wireshark_filter": "ip.src == 10.10.1.14 && ip.dst == 198.51.100.77 && tcp.dstport == 80 && tcp.flags.syn == 1 && tcp.flags.ack == 0"
+        }
+      ]
+    },
+    {
+      "pcap": "pcaps/dns_tunnel.pcap",
+      "max_severity": "HIGH",
+      "summary": {
+        "packets": 248,
+        "bytes": 31210,
+        "first_timestamp": 1773478800.0,
+        "last_timestamp": 1773478885.493422,
+        "duration_s": 85.493422,
+        "protocol_hierarchy": {
+          "ETH/IP/UDP/DNS": 130,
+          "ETH/IP/TCP": 109,
+          "ETH/IP/ICMP": 6,
+          "ETH/ARP": 2,
+          "ETH/IP/TCP/HTTP": 1
+        },
+        "top_talkers": [
+          {
+            "address": "10.10.1.12",
+            "packets": 136,
+            "bytes": 22276
+          },
+          {
+            "address": "198.51.100.53",
+            "packets": 120,
+            "bytes": 20940
+          },
+          {
+            "address": "10.10.1.15",
+            "packets": 64,
+            "bytes": 5074
+          },
+          {
+            "address": "10.10.0.20",
+            "packets": 50,
+            "bytes": 3740
+          },
+          {
+            "address": "10.10.1.13",
+            "packets": 34,
+            "bytes": 2768
+          },
+          {
+            "address": "203.0.113.10",
+            "packets": 20,
+            "bytes": 1680
+          },
+          {
+            "address": "203.0.113.55",
+            "packets": 20,
+            "bytes": 1680
+          },
+          {
+            "address": "10.10.1.11",
+            "packets": 12,
+            "bytes": 1008
+          },
+          {
+            "address": "10.10.0.53",
+            "packets": 10,
+            "bytes": 848
+          },
+          {
+            "address": "203.0.113.40",
+            "packets": 10,
+            "bytes": 840
+          }
+        ],
+        "conversations": [
+          {
+            "a": "10.10.1.12",
+            "b": "198.51.100.53",
+            "packets": 120,
+            "bytes": 20940,
+            "protocols": [
+              "UDP"
+            ]
+          },
+          {
+            "a": "10.10.0.20",
+            "b": "10.10.1.15",
+            "packets": 30,
+            "bytes": 2244,
+            "protocols": [
+              "TCP"
+            ]
+          },
+          {
+            "a": "10.10.1.13",
+            "b": "203.0.113.10",
+            "packets": 10,
+            "bytes": 840,
+            "protocols": [
+              "TCP"
+            ]
+          },
+          {
+            "a": "10.10.1.11",
+            "b": "203.0.113.40",
+            "packets": 10,
+            "bytes": 840,
+            "protocols": [
+              "TCP"
+            ]
+          },
+          {
+            "a": "10.10.0.20",
+            "b": "10.10.1.13",
+            "packets": 10,
+            "bytes": 748,
+            "protocols": [
+              "TCP"
+            ]
+          },
+          {
+            "a": "10.10.1.15",
+            "b": "203.0.113.10",
+            "packets": 10,
+            "bytes": 840,
+            "protocols": [
+              "TCP"
+            ]
+          },
+          {
+            "a": "10.10.0.20",
+            "b": "10.10.1.12",
+            "packets": 10,
+            "bytes": 748,
+            "protocols": [
+              "TCP"
+            ]
+          },
+          {
+            "a": "10.10.1.13",
+            "b": "203.0.113.55",
+            "packets": 10,
+            "bytes": 840,
+            "protocols": [
+              "TCP"
+            ]
+          },
+          {
+            "a": "10.10.0.80",
+            "b": "10.10.1.15",
+            "packets": 10,
+            "bytes": 810,
+            "protocols": [
+              "TCP"
+            ]
+          },
+          {
+            "a": "10.10.1.15",
+            "b": "203.0.113.55",
+            "packets": 10,
+            "bytes": 840,
+            "protocols": [
+              "TCP"
+            ]
+          }
+        ],
+        "top_ports": [
+          {
+            "port": "UDP/53",
+            "packets": 130
+          },
+          {
+            "port": "TCP/443",
+            "packets": 50
+          },
+          {
+            "port": "TCP/445",
+            "packets": 50
+          },
+          {
+            "port": "TCP/80",
+            "packets": 10
+          }
+        ],
+        "dns_queries": 65,
+        "unique_dns_names": 63,
+        "arp_packets": 2,
+        "http_requests": 1
+      },
+      "findings": [
+        {
+          "analyzer": "dns_tunnel",
+          "title": "Probable DNS tunnel to exfil-example.net (60 unique subdomains)",
+          "severity": "HIGH",
+          "description": "60 queries from 10.10.1.12 produced 60 distinct subdomains of exfil-example.net; 100% of them have labels >= 30 chars or entropy >= 3.5 bits/char (mean entropy 4.70, longest label 40). Query rate 1.66/s; record types {'TXT': 60}. Example: rqpe6cbm2jygnebggdn7cpstkjckkxnbzocibxhf.l4oj6rfdnv2anq57smoywndsi4uz35.t1.exfil-example.net",
+          "technique": "T1071.004",
+          "indicators": {
+            "domain": "exfil-example.net",
+            "clients": [
+              "10.10.1.12"
+            ],
+            "example_query": "rqpe6cbm2jygnebggdn7cpstkjckkxnbzocibxhf.l4oj6rfdnv2anq57smoywndsi4uz35.t1.exfil-example.net"
+          },
+          "evidence": {
+            "queries": 60,
+            "unique_subdomains": 60,
+            "suspicious_ratio": 1.0,
+            "mean_entropy": 4.696,
+            "longest_label": 40,
+            "queries_per_second": 1.659,
+            "qtypes": {
+              "TXT": 60
+            }
+          },
+          "wireshark_filter": "dns.qry.name contains \"exfil-example.net\" && dns.flags.response == 0"
+        }
+      ]
+    },
+    {
+      "pcap": "pcaps/http_credentials.pcap",
+      "max_severity": "HIGH",
+      "summary": {
+        "packets": 124,
+        "bytes": 10143,
+        "first_timestamp": 1773478800.0,
+        "last_timestamp": 1773478846.931225,
+        "duration_s": 46.931225,
+        "protocol_hierarchy": {
+          "ETH/IP/TCP": 97,
+          "ETH/IP/ICMP": 12,
+          "ETH/IP/UDP": 6,
+          "ETH/IP/UDP/DNS": 6,
+          "ETH/IP/TCP/HTTP": 3
+        },
+        "top_talkers": [
+          {
+            "address": "10.10.1.13",
+            "packets": 48,
+            "bytes": 3869
+          },
+          {
+            "address": "10.10.0.20",
+            "packets": 40,
+            "bytes": 2992
+          },
+          {
+            "address": "10.10.0.80",
+            "packets": 30,
+            "bytes": 2415
+          },
+          {
+            "address": "10.10.1.15",
+            "packets": 26,
+            "bytes": 2192
+          },
+          {
+            "address": "10.10.1.11",
+            "packets": 26,
+            "bytes": 2146
+          },
+          {
+            "address": "10.10.1.12",
+            "packets": 22,
+            "bytes": 1756
+          },
+          {
+            "address": "203.0.113.25",
+            "packets": 20,
+            "bytes": 1680
+          },
+          {
+            "address": "10.10.0.1",
+            "packets": 12,
+            "bytes": 1176
+          },
+          {
+            "address": "203.0.113.40",
+            "packets": 10,
+            "bytes": 840
+          },
+          {
+            "address": "198.51.100.123",
+            "packets": 6,
+            "bytes": 540
+          }
+        ],
+        "conversations": [
+          {
+            "a": "10.10.1.15",
+            "b": "203.0.113.25",
+            "packets": 20,
+            "bytes": 1680,
+            "protocols": [
+              "TCP"
+            ]
+          },
+          {
+            "a": "10.10.0.20",
+            "b": "10.10.1.13",
+            "packets": 20,
+            "bytes": 1496,
+            "protocols": [
+              "TCP"
+            ]
+          },
+          {
+            "a": "10.10.0.80",
+            "b": "10.10.1.13",
+            "packets": 20,
+            "bytes": 1605,
+            "protocols": [
+              "TCP"
+            ]
+          },
+          {
+            "a": "10.10.1.12",
+            "b": "203.0.113.40",
+            "packets": 10,
+            "bytes": 840,
+            "protocols": [
+              "TCP"
+            ]
+          },
+          {
+            "a": "10.10.0.20",
+            "b": "10.10.1.11",
+            "packets": 10,
+            "bytes": 748,
+            "protocols": [
+              "TCP"
+            ]
+          },
+          {
+            "a": "10.10.0.20",
+            "b": "10.10.1.12",
+            "packets": 10,
+            "bytes": 748,
+            "protocols": [
+              "TCP"
+            ]
+          },
+          {
+            "a": "10.10.0.80",
+            "b": "10.10.1.11",
+            "packets": 10,
+            "bytes": 810,
+            "protocols": [
+              "TCP"
+            ]
+          },
+          {
+            "a": "10.10.0.1",
+            "b": "10.10.1.11",
+            "packets": 6,
+            "bytes": 588,
+            "protocols": [
+              "ICMP"
+            ]
+          },
+          {
+            "a": "10.10.0.1",
+            "b": "10.10.1.13",
+            "packets": 6,
+            "bytes": 588,
+            "protocols": [
+              "ICMP"
+            ]
+          },
+          {
+            "a": "10.10.0.53",
+            "b": "10.10.1.15",
+            "packets": 4,
+            "bytes": 332,
+            "protocols": [
+              "UDP"
+            ]
+          }
+        ],
+        "top_ports": [
+          {
+            "port": "TCP/445",
+            "packets": 40
+          },
+          {
+            "port": "TCP/443",
+            "packets": 30
+          },
+          {
+            "port": "TCP/80",
+            "packets": 30
+          },
+          {
+            "port": "UDP/123",
+            "packets": 6
+          },
+          {
+            "port": "UDP/53",
+            "packets": 6
+          }
+        ],
+        "dns_queries": 3,
+        "unique_dns_names": 2,
+        "arp_packets": 0,
+        "http_requests": 3
+      },
+      "findings": [
+        {
+          "analyzer": "credentials",
+          "title": "Cleartext HTTP Basic credential from 10.10.1.13 to 10.10.0.80:80",
+          "severity": "HIGH",
+          "description": "Frame 64: HTTP GET /admin on host intranet.corp.example carried an Authorization: Basic header (base64 is encoding, not encryption). Username 'admin' and a secret ('Pa*********', 11 chars) crossed the network unencrypted; anyone on the path (or a MITM) can harvest them.",
+          "technique": "T1040",
+          "indicators": {
+            "client": "10.10.1.13",
+            "server": "10.10.0.80",
+            "port": 80,
+            "username": "admin",
+            "protocol": "HTTP Basic"
+          },
+          "evidence": {
+            "frame": 64,
+            "secret_masked": "Pa*********",
+            "secret_length": 11
+          },
+          "wireshark_filter": "http.authorization contains \"Basic\""
+        },
+        {
+          "analyzer": "credentials",
+          "title": "Cleartext HTTP form POST credential from 10.10.1.13 to 10.10.0.80:80",
+          "severity": "HIGH",
+          "description": "Frame 54: HTTP POST /login to host intranet.corp.example submitted a form with a password field (username, password, submit). Username 'jscirica' and a secret ('Su**********', 12 chars) crossed the network unencrypted; anyone on the path (or a MITM) can harvest them.",
+          "technique": "T1040",
+          "indicators": {
+            "client": "10.10.1.13",
+            "server": "10.10.0.80",
+            "port": 80,
+            "username": "jscirica",
+            "protocol": "HTTP form POST"
+          },
+          "evidence": {
+            "frame": 54,
+            "secret_masked": "Su**********",
+            "secret_length": 12
+          },
+          "wireshark_filter": "http.request.method == \"POST\" && urlencoded-form.key contains \"pass\""
+        }
+      ]
+    },
+    {
+      "pcap": "pcaps/icmp_exfil.pcap",
+      "max_severity": "HIGH",
+      "summary": {
+        "packets": 128,
+        "bytes": 47224,
+        "first_timestamp": 1773478800.0,
+        "last_timestamp": 1773478841.361336,
+        "duration_s": 41.361336,
+        "protocol_hierarchy": {
+          "ETH/IP/ICMP": 72,
+          "ETH/IP/TCP": 48,
+          "ETH/IP/UDP/DNS": 4,
+          "ETH/IP/TCP/HTTP": 2,
+          "ETH/ARP": 2
+        },
+        "top_talkers": [
+          {
+            "address": "10.10.1.15",
+            "packets": 60,
+            "bytes": 41572
+          },
+          {
+            "address": "198.51.100.77",
+            "packets": 60,
+            "bytes": 41572
+          },
+          {
+            "address": "10.10.1.11",
+            "packets": 30,
+            "bytes": 2368
+          },
+          {
+            "address": "10.10.0.80",
+            "packets": 20,
+            "bytes": 1620
+          },
+          {
+            "address": "10.10.1.12",
+            "packets": 18,
+            "bytes": 1596
+          },
+          {
+            "address": "10.10.1.13",
+            "packets": 18,
+            "bytes": 1604
+          },
+          {
+            "address": "10.10.0.1",
+            "packets": 12,
+            "bytes": 1176
+          },
+          {
+            "address": "203.0.113.40",
+            "packets": 10,
+            "bytes": 840
+          },
+          {
+            "address": "10.10.0.20",
+            "packets": 10,
+            "bytes": 748
+          },
+          {
+            "address": "198.51.100.123",
+            "packets": 10,
+            "bytes": 840
+          }
+        ],
+        "conversations": [
+          {
+            "a": "10.10.1.15",
+            "b": "198.51.100.77",
+            "packets": 60,
+            "bytes": 41572,
+            "protocols": [
+              "ICMP"
+            ]
+          },
+          {
+            "a": "10.10.0.80",
+            "b": "10.10.1.11",
+            "packets": 20,
+            "bytes": 1620,
+            "protocols": [
+              "TCP"
+            ]
+          },
+          {
+            "a": "10.10.1.12",
+            "b": "203.0.113.40",
+            "packets": 10,
+            "bytes": 840,
+            "protocols": [
+              "TCP"
+            ]
+          },
+          {
+            "a": "10.10.0.20",
+            "b": "10.10.1.11",
+            "packets": 10,
+            "bytes": 748,
+            "protocols": [
+              "TCP"
+            ]
+          },
+          {
+            "a": "10.10.1.13",
+            "b": "198.51.100.123",
+            "packets": 10,
+            "bytes": 840,
+            "protocols": [
+              "TCP"
+            ]
+          },
+          {
+            "a": "10.10.0.1",
+            "b": "10.10.1.12",
+            "packets": 6,
+            "bytes": 588,
+            "protocols": [
+              "ICMP"
+            ]
+          },
+          {
+            "a": "10.10.0.1",
+            "b": "10.10.1.13",
+            "packets": 6,
+            "bytes": 588,
+            "protocols": [
+              "ICMP"
+            ]
+          },
+          {
+            "a": "10.10.0.53",
+            "b": "10.10.1.12",
+            "packets": 2,
+            "bytes": 168,
+            "protocols": [
+              "UDP"
+            ]
+          },
+          {
+            "a": "10.10.0.53",
+            "b": "10.10.1.13",
+            "packets": 2,
+            "bytes": 176,
+            "protocols": [
+              "UDP"
+            ]
+          }
+        ],
+        "top_ports": [
+          {
+            "port": "TCP/80",
+            "packets": 20
+          },
+          {
+            "port": "TCP/443",
+            "packets": 20
+          },
+          {
+            "port": "TCP/445",
+            "packets": 10
+          },
+          {
+            "port": "UDP/53",
+            "packets": 4
+          }
+        ],
+        "dns_queries": 2,
+        "unique_dns_names": 2,
+        "arp_packets": 2,
+        "http_requests": 2
+      },
+      "findings": [
+        {
+          "analyzer": "icmp_exfil",
+          "title": "ICMP tunnel / exfiltration 10.10.1.15 -> 198.51.100.77 (19526 payload bytes)",
+          "severity": "HIGH",
+          "description": "30 echo requests from 10.10.1.15 to 198.51.100.77: oversized payloads; payload changes every packet; high-entropy payload. Mean payload 651 bytes, 100% unique payloads, mean entropy 7.67 bits/byte. A real ping repeats a fixed 32/56-byte pattern.",
+          "technique": "T1048",
+          "indicators": {
+            "source": "10.10.1.15",
+            "destination": "198.51.100.77"
+          },
+          "evidence": {
+            "echo_requests": 30,
+            "payload_bytes": 19526,
+            "mean_payload_size": 650.9,
+            "unique_payload_ratio": 1.0,
+            "mean_entropy": 7.673
+          },
+          "wireshark_filter": "icmp.type == 8 && ip.src == 10.10.1.15 && data.len > 64"
+        }
+      ]
+    },
+    {
+      "pcap": "pcaps/port_scan.pcap",
+      "max_severity": "HIGH",
+      "summary": {
+        "packets": 589,
+        "bytes": 37284,
+        "first_timestamp": 1773478800.0,
+        "last_timestamp": 1773478876.058281,
+        "duration_s": 76.058281,
+        "protocol_hierarchy": {
+          "ETH/IP/TCP": 561,
+          "ETH/IP/UDP/DNS": 18,
+          "ETH/IP/TCP/HTTP": 4,
+          "ETH/IP/UDP": 4,
+          "ETH/ARP": 2
+        },
+        "top_talkers": [
+          {
+            "address": "10.10.0.20",
+            "packets": 435,
+            "bytes": 24530
+          },
+          {
+            "address": "10.10.1.66",
+            "packets": 385,
+            "bytes": 20790
+          },
+          {
+            "address": "10.10.1.11",
+            "packets": 100,
+            "bytes": 8078
+          },
+          {
+            "address": "10.10.1.14",
+            "packets": 44,
+            "bytes": 3572
+          },
+          {
+            "address": "203.0.113.40",
+            "packets": 40,
+            "bytes": 3360
+          },
+          {
+            "address": "203.0.113.10",
+            "packets": 40,
+            "bytes": 3360
+          },
+          {
+            "address": "10.10.0.80",
+            "packets": 40,
+            "bytes": 3240
+          },
+          {
+            "address": "10.10.1.12",
+            "packets": 34,
+            "bytes": 2764
+          },
+          {
+            "address": "10.10.0.53",
+            "packets": 18,
+            "bytes": 1510
+          },
+          {
+            "address": "10.10.1.13",
+            "packets": 12,
+            "bytes": 990
+          }
+        ],
+        "conversations": [
+          {
+            "a": "10.10.0.20",
+            "b": "10.10.1.66",
+            "packets": 385,
+            "bytes": 20790,
+            "protocols": [
+              "TCP"
+            ]
+          },
+          {
+            "a": "10.10.0.20",
+            "b": "10.10.1.11",
+            "packets": 30,
+            "bytes": 2244,
+            "protocols": [
+              "TCP"
+            ]
+          },
+          {
+            "a": "10.10.1.11",
+            "b": "203.0.113.10",
+            "packets": 20,
+            "bytes": 1680,
+            "protocols": [
+              "TCP"
+            ]
+          },
+          {
+            "a": "10.10.0.80",
+            "b": "10.10.1.11",
+            "packets": 20,
+            "bytes": 1620,
+            "protocols": [
+              "TCP"
+            ]
+          },
+          {
+            "a": "10.10.1.12",
+            "b": "203.0.113.40",
+            "packets": 20,
+            "bytes": 1680,
+            "protocols": [
+              "TCP"
+            ]
+          },
+          {
+            "a": "10.10.1.11",
+            "b": "203.0.113.40",
+            "packets": 10,
+            "bytes": 840,
+            "protocols": [
+              "TCP"
+            ]
+          },
+          {
+            "a": "10.10.0.20",
+            "b": "10.10.1.14",
+            "packets": 10,
+            "bytes": 748,
+            "protocols": [
+              "TCP"
+            ]
+          },
+          {
+            "a": "10.10.1.14",
+            "b": "203.0.113.10",
+            "packets": 10,
+            "bytes": 840,
+            "protocols": [
+              "TCP"
+            ]
+          },
+          {
+            "a": "10.10.0.80",
+            "b": "10.10.1.13",
+            "packets": 10,
+            "bytes": 810,
+            "protocols": [
+              "TCP"
+            ]
+          },
+          {
+            "a": "10.10.1.11",
+            "b": "203.0.113.55",
+            "packets": 10,
+            "bytes": 840,
+            "protocols": [
+              "TCP"
+            ]
+          }
+        ],
+        "top_ports": [
+          {
+            "port": "TCP/443",
+            "packets": 90
+          },
+          {
+            "port": "TCP/445",
+            "packets": 53
+          },
+          {
+            "port": "TCP/80",
+            "packets": 43
+          },
+          {
+            "port": "UDP/53",
+            "packets": 18
+          },
+          {
+            "port": "UDP/123",
+            "packets": 4
+          },
+          {
+            "port": "TCP/3389",
+            "packets": 3
+          },
+          {
+            "port": "TCP/139",
+            "packets": 3
+          },
+          {
+            "port": "TCP/22",
+            "packets": 3
+          },
+          {
+            "port": "TCP/994",
+            "packets": 2
+          },
+          {
+            "port": "TCP/87",
+            "packets": 2
+          }
+        ],
+        "dns_queries": 9,
+        "unique_dns_names": 3,
+        "arp_packets": 2,
+        "http_requests": 4
+      },
+      "findings": [
+        {
+          "analyzer": "port_scan",
+          "title": "TCP SYN scan from 10.10.1.66 (190 ports in 10s)",
+          "severity": "HIGH",
+          "description": "10.10.1.66 sent SYN probes to 190 distinct TCP ports on 1 host(s); peak of 190 unique ports inside a 10 second window. 185 probes were answered with RST (closed) and 5 with SYN/ACK (open), which is the classic half-open scan signature.",
+          "technique": "T1046",
+          "indicators": {
+            "scanner_ip": "10.10.1.66",
+            "targets": [
+              "10.10.0.20"
+            ],
+            "open_ports": [
+              22,
+              80,
+              139,
+              445,
+              3389
+            ]
+          },
+          "evidence": {
+            "total_syn_probes": 190,
+            "unique_ports": 190,
+            "peak_ports_in_window": 190,
+            "window_start": 1773478842.010941,
+            "rst_responses": 185,
+            "port_range": "3-8443"
+          },
+          "wireshark_filter": "ip.src == 10.10.1.66 && tcp.flags.syn == 1 && tcp.flags.ack == 0"
+        }
+      ]
+    },
+    {
+      "pcap": "pcaps/smb_lateral.pcap",
+      "max_severity": "CRITICAL",
+      "summary": {
+        "packets": 157,
+        "bytes": 11812,
+        "first_timestamp": 1773478800.0,
+        "last_timestamp": 1773478843.421395,
+        "duration_s": 43.421395,
+        "protocol_hierarchy": {
+          "ETH/IP/TCP": 133,
+          "ETH/IP/UDP": 6,
+          "ETH/ARP": 6,
+          "ETH/IP/ICMP": 6,
+          "ETH/IP/UDP/DNS": 4,
+          "ETH/IP/TCP/HTTP": 2
+        },
+        "top_talkers": [
+          {
+            "address": "10.10.1.11",
+            "packets": 95,
+            "bytes": 6852
+          },
+          {
+            "address": "10.10.1.13",
+            "packets": 24,
+            "bytes": 2022
+          },
+          {
+            "address": "10.10.1.12",
+            "packets": 22,
+            "bytes": 1738
+          },
+          {
+            "address": "10.10.0.80",
+            "packets": 20,
+            "bytes": 1620
+          },
+          {
+            "address": "198.51.100.123",
+            "packets": 16,
+            "bytes": 1380
+          },
+          {
+            "address": "10.10.1.20",
+            "packets": 11,
+            "bytes": 836
+          },
+          {
+            "address": "10.10.1.21",
+            "packets": 11,
+            "bytes": 836
+          },
+          {
+            "address": "10.10.1.22",
+            "packets": 11,
+            "bytes": 836
+          },
+          {
+            "address": "10.10.1.23",
+            "packets": 11,
+            "bytes": 836
+          },
+          {
+            "address": "10.10.1.24",
+            "packets": 11,
+            "bytes": 836
+          }
+        ],
+        "conversations": [
+          {
+            "a": "10.10.1.11",
+            "b": "10.10.1.20",
+            "packets": 11,
+            "bytes": 836,
+            "protocols": [
+              "TCP"
+            ]
+          },
+          {
+            "a": "10.10.1.11",
+            "b": "10.10.1.21",
+            "packets": 11,
+            "bytes": 836,
+            "protocols": [
+              "TCP"
+            ]
+          },
+          {
+            "a": "10.10.1.11",
+            "b": "10.10.1.22",
+            "packets": 11,
+            "bytes": 836,
+            "protocols": [
+              "TCP"
+            ]
+          },
+          {
+            "a": "10.10.1.11",
+            "b": "10.10.1.23",
+            "packets": 11,
+            "bytes": 836,
+            "protocols": [
+              "TCP"
+            ]
+          },
+          {
+            "a": "10.10.1.11",
+            "b": "10.10.1.24",
+            "packets": 11,
+            "bytes": 836,
+            "protocols": [
+              "TCP"
+            ]
+          },
+          {
+            "a": "10.10.1.11",
+            "b": "10.10.1.25",
+            "packets": 11,
+            "bytes": 836,
+            "protocols": [
+              "TCP"
+            ]
+          },
+          {
+            "a": "10.10.1.13",
+            "b": "198.51.100.123",
+            "packets": 10,
+            "bytes": 840,
+            "protocols": [
+              "TCP"
+            ]
+          },
+          {
+            "a": "10.10.0.20",
+            "b": "10.10.1.12",
+            "packets": 10,
+            "bytes": 748,
+            "protocols": [
+              "TCP"
+            ]
+          },
+          {
+            "a": "10.10.0.80",
+            "b": "10.10.1.11",
+            "packets": 10,
+            "bytes": 810,
+            "protocols": [
+              "TCP"
+            ]
+          },
+          {
+            "a": "10.10.1.13",
+            "b": "203.0.113.10",
+            "packets": 10,
+            "bytes": 840,
+            "protocols": [
+              "TCP"
+            ]
+          }
+        ],
+        "top_ports": [
+          {
+            "port": "TCP/445",
+            "packets": 95
+          },
+          {
+            "port": "TCP/443",
+            "packets": 20
+          },
+          {
+            "port": "TCP/80",
+            "packets": 20
+          },
+          {
+            "port": "UDP/123",
+            "packets": 6
+          },
+          {
+            "port": "UDP/53",
+            "packets": 4
+          }
+        ],
+        "dns_queries": 2,
+        "unique_dns_names": 2,
+        "arp_packets": 6,
+        "http_requests": 2
+      },
+      "findings": [
+        {
+          "analyzer": "smb_lateral",
+          "title": "SMB lateral-movement burst from 10.10.1.11 to 25 hosts",
+          "severity": "CRITICAL",
+          "description": "10.10.1.11 opened TCP/445 sessions to 25 distinct hosts within 60s (31 SYNs total). 6 SMB2 SESSION_SETUP requests were seen and TREE_CONNECT to administrative shares ADMIN$. Workstations do not normally fan out over SMB like this; it matches PsExec-style remote execution or worm propagation.",
+          "technique": "T1021.002",
+          "indicators": {
+            "source": "10.10.1.11",
+            "targets": [
+              "10.10.1.20",
+              "10.10.1.21",
+              "10.10.1.22",
+              "10.10.1.23",
+              "10.10.1.24",
+              "10.10.1.25",
+              "10.10.1.26",
+              "10.10.1.27",
+              "10.10.1.28",
+              "10.10.1.29",
+              "10.10.1.30",
+              "10.10.1.31",
+              "10.10.1.32",
+              "10.10.1.33",
+              "10.10.1.34",
+              "10.10.1.35",
+              "10.10.1.36",
+              "10.10.1.37",
+              "10.10.1.38",
+              "10.10.1.39",
+              "10.10.1.40",
+              "10.10.1.41",
+              "10.10.1.42",
+              "10.10.1.43",
+              "10.10.1.44"
+            ],
+            "admin_shares": [
+              "ADMIN$"
+            ]
+          },
+          "evidence": {
+            "distinct_peers_in_window": 25,
+            "total_syns": 31,
+            "session_setups": 6
+          },
+          "wireshark_filter": "ip.src == 10.10.1.11 && tcp.dstport == 445 && tcp.flags.syn == 1 && tcp.flags.ack == 0"
+        }
+      ]
+    }
+  ]
+}

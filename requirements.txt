@@ -1,0 +1,8 @@
+# The netforensics package and analyzers use the Python standard library only.
+# These are development/optional dependencies.
+
+pytest>=8.0          # test suite
+scapy>=2.5 ; python_version >= "3.11"   # OPTIONAL: scripts/generate_pcaps.py will
+                                        # use scapy to re-verify captures if present,
+                                        # but builds every frame with the stdlib and
+                                        # runs fine without it.
